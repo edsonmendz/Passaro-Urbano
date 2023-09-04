@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { OfertasService } from '../ofertas.service';
 import { Oferta } from '../shared/oferta.model'
 
@@ -17,11 +17,10 @@ export class HomeComponent implements OnInit{
   }
 
   ngOnInit() {
-    this.ofertasService.getOfertas2()
+    this.ofertasService.getOfertas()
       .then(        
-        ( ofertas: Oferta[]) => {
-          console.log('a função resolve foi resolvida depois de 3 segundos')
-          this.ofertas = ofertas}        
+        ( ofertas: Oferta[]) => {          
+          this.ofertas = ofertas }        
       )
       .catch ((param: any) => {
         console.log(param)
