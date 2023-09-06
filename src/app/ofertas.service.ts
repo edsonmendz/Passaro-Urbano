@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Oferta } from './shared/oferta.model';
 
 import { interval, take, lastValueFrom, firstValueFrom } from 'rxjs';
+import { __await } from 'tslib';
 
 @Injectable()
 
@@ -66,6 +67,12 @@ export class OfertasService {
     public getOfertas(): Promise<Oferta[]> {
         return firstValueFrom(this.http.get('http://localhost:3000/ofertas?destaque=true'))
         .then((resposta: any) => resposta)
+    }
+
+    public getOfertasPorCategoria(categoria: string) : Promise<Oferta[]> {
+        return lastValueFrom(this.http.get(`http://localhost:3000/ofertas?categoria=${categoria}`))
+            .then((resposta: any) => resposta)
+            
     }
 
     // public getOfertas2(): Promise<Array<Oferta>> {
