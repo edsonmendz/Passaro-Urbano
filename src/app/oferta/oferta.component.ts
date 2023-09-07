@@ -15,16 +15,14 @@ export class OfertaComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute, 
-    private ofertaService: OfertasService) {
-    
-  }
+    private ofertaService: OfertasService) {}
 
-  ngOnInit() {
-    console.log(this.ofertaService.getOfertaPorId(this.route.snapshot.params['id']))
+  ngOnInit() {    
+    
     this.ofertaService.getOfertaPorId(this.route.snapshot.params['id'])
-    .then((oferta: Oferta) => {        
+    .then((oferta: Oferta) => {
         this.oferta = oferta
-        console.log(oferta)
+        
     })    
   }
 }

@@ -28,10 +28,6 @@ export class OfertasService {
     }
 
     public getOfertaPorId (id:number): Promise<Oferta> {        
-        return lastValueFrom(this.http.get(`http://localhost:3000/ofertas?id=${id}`))
-        
-        .then((resposta: any) => resposta)        
-    }
-
-    
+        return lastValueFrom(this.http.get<Oferta>(`http://localhost:3000/ofertas/${id}`))                    
+    }    
 }
