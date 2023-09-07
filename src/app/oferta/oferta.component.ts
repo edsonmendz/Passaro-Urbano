@@ -19,10 +19,12 @@ export class OfertaComponent implements OnInit {
     
   }
 
-  ngOnInit() {    
+  ngOnInit() {
+    console.log(this.ofertaService.getOfertaPorId(this.route.snapshot.params['id']))
     this.ofertaService.getOfertaPorId(this.route.snapshot.params['id'])
-    .then((oferta: Oferta) => {
+    .then((oferta: Oferta) => {        
         this.oferta = oferta
+        console.log(oferta)
     })    
   }
 }
