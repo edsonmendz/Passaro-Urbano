@@ -43,5 +43,17 @@
     </div>
 
   </div>
-  <br>
+  <div class="row mt-1 mb-4">
+    <div class="col">
+      <nav>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+          <button class="nav-link active" routerLink="como-usar" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#como-usar" type="button" role="tab" aria-controls="como-usar" aria-selected="true">Como usar</button>
+          <button class="nav-link" routerLink="onde-fica" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#onde-fica" type="button" role="tab" aria-controls="onde-fica" aria-selected="false">Onde Fica</button>                   
+        </div>
+      </nav>
+      <div class="tab-content" id="nav-tabContent">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
 </div>

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Oferta } from './shared/oferta.model';
+import { URL_API } from './app.api';
 
 import { interval, take, lastValueFrom, firstValueFrom } from 'rxjs';
 import { __await } from 'tslib';
@@ -8,8 +9,7 @@ import { __await } from 'tslib';
 @Injectable()
 
 export class OfertasService {
-
-    private url_api = "http://localhost:3000/ofertas"
+   
 
     constructor( private http: HttpClient) {
 
@@ -17,17 +17,25 @@ export class OfertasService {
     
 
     public getOfertas(): Promise<Oferta[]> {
-        return firstValueFrom(this.http.get('http://localhost:3000/ofertas?destaque=true'))
+        return firstValueFrom(this.http.get(`${URL_API}ofertas?destaque=true`))
         .then((resposta: any) => resposta)
     }
 
     public getOfertasPorCategoria(categoria: string) : Promise<Oferta[]> {
-        return lastValueFrom(this.http.get(`http://localhost:3000/ofertas?categoria=${categoria}`))
+        return lastValueFrom(this.http.get(`${URL_API}ofertas?categoria=${categoria}`))
             .then((resposta: any) => resposta)
             
     }
 
     public getOfertaPorId (id:number): Promise<Oferta> {        
-        return lastValueFrom(this.http.get<Oferta>(`http://localhost:3000/ofertas/${id}`))                    
-    }    
+        return lastValueFrom(this.http.get<Oferta>(`${URL_API}ofertas/${id}`))                    
+    }
+
+    public comoUsarOfertaPorId (id:number): Promise<string> {
+        return lastValueFrom(this.http.get<string>(`${URL_API}como-usar/${id}`))
+    }
+
+    public ondeFicaOfertaPorId (id:number): Promise<string> {
+        return lastValueFrom(this.http.get<string>(`${URL_API}onde-fica/${id}`))
+    }
 }
