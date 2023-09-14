@@ -11,8 +11,6 @@ import { Observable, interval, Observer, Subscription } from 'rxjs'
   providers: [OfertasService]
 })
 export class OfertaComponent implements OnInit, OnDestroy {
-  private tempoObservableSubscription!: Subscription
-  private meuObservableTesteSubscription!: Subscription
   public oferta!:Oferta
 
   constructor(
@@ -30,30 +28,11 @@ export class OfertaComponent implements OnInit, OnDestroy {
     //   (parametro: any) => {console.log(parametro)},
     //   (erro: any) => console.log(erro),
     //   () => console.log('processamento foi classificado como concluído')
-    //   )
-
-    let tempo = interval(2000)
-
-    this.tempoObservableSubscription = tempo.subscribe((intervalo: number) => {
-      console.log(intervalo)
-    })
-
-
-    //observável
-    let meuObservableTeste = Observable.create((observer: Observer<string>) => {
-      observer.next('Primeiro evento da Stram')
-      observer.complete()
-    })
-    //observador
-    this.meuObservableTesteSubscription = meuObservableTeste.subscribe(
-      (resultado: any) => console.log(resultado),
-      (erro: string) => console.log(erro),
-      () => console.log('Stream de eventos foi finalizada')
-    )
+    //   )    
   }
   
   ngOnDestroy() {
-    this.meuObservableTesteSubscription.unsubscribe()
-    this.tempoObservableSubscription.unsubscribe()
+    
   }
+
 }

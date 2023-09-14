@@ -1,9 +1,10 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse  } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Oferta } from './shared/oferta.model';
 import { URL_API } from './app.api';
 
-import { interval, take, lastValueFrom, firstValueFrom } from 'rxjs';
+import { interval, take, lastValueFrom, firstValueFrom, Observable, retry } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { __await } from 'tslib';
 
 @Injectable()
@@ -38,4 +39,14 @@ export class OfertasService {
     public ondeFicaOfertaPorId (id:number): Promise<string> {
         return lastValueFrom(this.http.get<string>(`${URL_API}onde-fica/${id}`))
     }
+    
+    public pesquisaOfertas(termo: String): Observable<Oferta[]> {
+    return this.http.get<Oferta[]>(`${URL_API}ofertas/?descricao_oferta_like=${termo}`)
+    
+    .pipe(
+        retry<Oferta[]>(10),
+        
+        map((resposta: Oferta[]) => resposta))
+        
+  }
 }
