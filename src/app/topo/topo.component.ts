@@ -14,7 +14,7 @@ import { switchMap, debounceTime, of, distinctUntilChanged, catchError } from 'r
 export class TopoComponent implements OnInit {
 
   public ofertas!: Observable<Oferta[]>;
-  public ofertas2!: Oferta[]
+  //public ofertas2!: Oferta[]
   private subjectPesquisa: Subject<String> = new Subject<String>();
   constructor(private ofertasService: OfertasService) {}
 
@@ -23,26 +23,16 @@ export class TopoComponent implements OnInit {
       debounceTime(1000),
       distinctUntilChanged(),
       switchMap((termo: String) => {
-        console.log('requisição http')
         if (termo.trim() === '') {
           return of<Oferta[]>([])
         }
         return this,this.ofertasService.pesquisaOfertas(termo)
         
       }),
-      catchError((err: any) => {
-        console.log(err)
+      catchError((err: any) => {        
         return of<Oferta[]>([])
       })      
-    )
-   
-
-    this.ofertas.subscribe(
-      (ofertas: Oferta[]) => {
-        console.log(ofertas)
-        this.ofertas2 = ofertas
-      }
-    )
+    )   
   }
 
   public pesquisa(termoDaBusca: String): void {
@@ -54,6 +44,10 @@ export class TopoComponent implements OnInit {
     // )
 
     this.subjectPesquisa.next(termoDaBusca)
+  }
+
+  public limpaPesquisa(): void {
+    this.subjectPesquisa.next('')
   }
 
 }
