@@ -1,7 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms'
+import { Component, OnInit } from '@angular/core';
 import { OrdemCompraService } from '../ordem-compra.service'
 import { Pedido } from '../shared/pedido.model'
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { CarrinhoService } from '../carrinho.service'
+import { ItemCarrinho } from '../shared/item-carrinho.model';
 
 @Component({
   selector: 'app-ordem-compra',
@@ -11,23 +13,53 @@ import { Pedido } from '../shared/pedido.model'
 })
 export class OrdemCompraComponent implements OnInit {
 
-  public idPedidoCompra!: number
+  idPedidoCompra!: number
+  itensCarrinho: ItemCarrinho[] = []
+  essaImagem!: any
 
-  @ViewChild('formulario') public f!: NgForm
+  public formulario: FormGroup = new FormGroup({
+    'endereco': new FormControl(null, [ Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
+    'numero': new FormControl(null, [Validators.required, Validators.minLength(1), Validators.maxLength(20)]),
+    'complemento': new FormControl(null),
+    'formaPagamento': new FormControl(null, [ Validators.required]),
+  })
 
-  constructor(private ordemCompraService: OrdemCompraService) { }
+  constructor(
+    private ordemCompraService: OrdemCompraService,
+    protected carrinhoService:CarrinhoService) { }
 
   ngOnInit() {
-    
+    this.itensCarrinho = this.carrinhoService.exibirItens()
+    console.log(this.itensCarrinho)
   }
 
-  public confirmarCompra():void {
+  public confirmarCompra(): void {
 
-    let pedido:Pedido = new Pedido(this.f.value.endereco, this.f.value.numero, this.f.value.complemento, this.f.value.formaPagamento)
+    if (this.carrinhoService.exibirItens().length === 0) {
+      alert(' Você não selecionou nenhum item!')
+    } else {
+      let pedido: Pedido = new Pedido(
+        this.formulario.value.endereco,
+        this.formulario.value.numero,
+        this.formulario.value.complemento,
+        this.formulario.value.formaPagamento,
+        this.carrinhoService.exibirItens()
+      )
 
-    this.ordemCompraService.efetivarCompra(pedido)
-      .subscribe((idPedido:number) => {
-        this.idPedidoCompra = idPedido
-      })
+      this.ordemCompraService.efetivarCompra(pedido)
+        .subscribe((idPedido:number) => {
+          this.idPedidoCompra = idPedido
+          this.carrinhoService.limparCarrinho()
+        })
+    }
   }
+
+  public adicionar( item:ItemCarrinho): void {
+    this.carrinhoService.adicionarQuantidade(item)
+  }
+
+  public subtrair( item:ItemCarrinho): void {
+    this.carrinhoService.subtrairQuantidade(item)
+  }
+  
 }

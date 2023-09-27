@@ -4,7 +4,7 @@ import localePt from '@angular/common/locales/pt'
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { routes } from './app.routes';
 
@@ -24,6 +24,8 @@ import { OndeFicaComponent } from './oferta/onde-fica/onde-fica.component';
 import { DescricaoReduzida } from './util/descricao-reduzida.pipe';
 import { OrdemCompraComponent } from './ordem-compra/ordem-compra.component';
 import { OrdemCompraSucessoComponent } from './ordem-compra-sucesso/ordem-compra-sucesso.component';
+
+import { CarrinhoService } from './carrinho.service';
 
 @NgModule({
   declarations: [
@@ -45,9 +47,10 @@ import { OrdemCompraSucessoComponent } from './ordem-compra-sucesso/ordem-compra
     AppRoutingModule,
     HttpClientModule,
     RouterModule.forRoot(routes),
-    FormsModule
+    ReactiveFormsModule
   ],
   providers: [
+    CarrinhoService,
     {provide: LOCALE_ID, useValue: 'pt-PT'}
   ],
   bootstrap: [AppComponent]

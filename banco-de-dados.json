@@ -241,6 +241,35 @@
       "complemento": "adgadg",
       "formaPagamento": "dinheiro",
       "id": 8
+    },
+    {
+      "endereco": "fjkhfkhy",
+      "numero": "12414",
+      "complemento": "fim",
+      "formaPagamento": "dinheiro",
+      "itens": [
+        {
+          "id": 4,
+          "img": {
+            "url": "/assets/ofertas/4/img1.jpg"
+          },
+          "titulo": "Estância das águas",
+          "descricao_oferta": "Diversão garantida com piscinas, trilhas e muito mais.",
+          "valor": 31.9,
+          "quantidade": 4
+        },
+        {
+          "id": 3,
+          "img": {
+            "url": "/assets/ofertas/3/img1.jpg"
+          },
+          "titulo": "Pizzas Grandes",
+          "descricao_oferta": "Pizza Grande, Mussarela, Marguerita ou outras!",
+          "valor": 21.9,
+          "quantidade": 5
+        }
+      ],
+      "id": 9
     }
   ]
 }

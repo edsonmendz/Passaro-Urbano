@@ -3,6 +3,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { Oferta } from '../shared/oferta.model';
 import { OfertasService } from '../ofertas.service';
 import { Observable, interval, Observer, Subscription } from 'rxjs'
+import { CarrinhoService } from '../carrinho.service';
 
 @Component({
   selector: 'urbano-oferta',
@@ -15,7 +16,8 @@ export class OfertaComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute, 
-    private ofertaService: OfertasService) {}
+    private ofertaService: OfertasService,
+    private carrinhoService: CarrinhoService) {}
 
   ngOnInit() {    
 
@@ -27,17 +29,20 @@ export class OfertaComponent implements OnInit, OnDestroy {
       })
     })
     
-      
-    
     // this.route.params.subscribe(
     //   (parametro: any) => {console.log(parametro)},
     //   (erro: any) => console.log(erro),
     //   () => console.log('processamento foi classificado como concluído')
     //   )    
   }
-  
+    
   ngOnDestroy() {
     
+  }
+
+  public adicionarItemCarrinho():void {
+    this.carrinhoService.incluirItem(this.oferta)
+    console.log(this.carrinhoService.exibirItens())
   }
 
 }
